@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">MyAndroidModules</string>
+    <string name="login_screen_title">Iniciar Sesión</string>
+    <string name="login_logo_content_description">Logo</string>
+    <string name="login_username_label">Usuario</string>
+    <string name="login_password_label">Contraseña</string>
+    <string name="login_hide_password_description">Ocultar contraseña</string>
+    <string name="login_show_password_description">Mostrar contraseña</string>
+    <string name="login_button_text">Iniciar Sesión</string>
+    <string name="login_forgot_password_button_text">¿Olvidaste la contraseña?</string>
+    <string name="login_or_continue_with">O continuar con</string>
+    <string name="login_google_icon_content_description">Icono de inicio de sesión con Google</string>
+    <string name="login_sign_in_with_google_button_text">Iniciar sesión con Google</string>
+</resources>
