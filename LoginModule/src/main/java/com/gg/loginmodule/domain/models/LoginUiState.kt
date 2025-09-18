@@ -4,7 +4,9 @@ sealed interface LoginUiState {
 
     object StandBy : LoginUiState
     object Loading : LoginUiState
-    data class Success(val message: String) : LoginUiState
-    data class Error(val error: String) : LoginUiState
-
+    object Success : LoginUiState
+    data class Error(
+        val errorTitle: String,
+        val errorMessage: String
+    ) : LoginUiState
 }

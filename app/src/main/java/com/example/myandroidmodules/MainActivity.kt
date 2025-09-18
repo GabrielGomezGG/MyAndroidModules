@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.myandroidmodules.ui.theme.MyAndroidModulesTheme
+import com.gg.loginmodule.domain.models.LoginUiState
 import com.gg.loginmodule.ui.LoginScreen
 
 class MainActivity : ComponentActivity() {
@@ -25,7 +26,7 @@ class MainActivity : ComponentActivity() {
 //                        name = "Android",
 //                        modifier = Modifier.padding(innerPadding)
 //                    )
-                    LoginScreen("title")
+                    LoginScreen("title", LoginUiState.Error("error title", "error message"))
                 }
             }
         }

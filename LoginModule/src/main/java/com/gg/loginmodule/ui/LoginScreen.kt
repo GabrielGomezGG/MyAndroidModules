@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -33,33 +34,58 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gg.loginmodule.R
+import com.gg.loginmodule.domain.models.LoginUiState
+import com.gg.loginmodule.ui.components.LoginAlertDialog
+import com.gg.loginmodule.ui.components.ShowCircularProgressIndicator
 import com.gg.loginmodule.ui.components.SignInWithButtonComp
 
 
 @Composable
 fun LoginScreen(
-    title: String
+    title: String,
+    loginUiState: LoginUiState
 ) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(true) }
+
+    when (loginUiState) {
+        LoginUiState.StandBy -> {}
+        LoginUiState.Loading -> {
+            ShowCircularProgressIndicator(true)
+        }
+        is LoginUiState.Success -> {}
+        is LoginUiState.Error -> {
+            LoginAlertDialog(
+                modifier = Modifier,
+                showDialog = showDialog,
+                icon = painterResource(R.drawable.error),
+                dialogTitle = loginUiState.errorTitle,
+                dialogText = loginUiState.errorMessage,
+                onDismissRequest = { showDialog = false },
+                onConfirmation = { showDialog = false }
+            )
+        }
+    }
+
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center, 
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_launcher_foreground), // Uses LoginModule's R
             contentDescription = stringResource(id = R.string.login_logo_content_description),
-            modifier = Modifier.size(120.dp) 
+            modifier = Modifier.size(120.dp)
         )
 
-        Spacer(modifier = Modifier.height(32.dp)) 
+        Spacer(modifier = Modifier.height(32.dp))
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally) { 
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = title, style = MaterialTheme.typography.headlineMedium)
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -79,7 +105,8 @@ fun LoginScreen(
                 label = { Text(stringResource(id = R.string.login_password_label)) },
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
-                    val image = if (passwordVisible) R.drawable.visibility else R.drawable.visibility_off
+                    val image =
+                        if (passwordVisible) R.drawable.visibility else R.drawable.visibility_off
 
                     val description = if (passwordVisible)
                         stringResource(id = R.string.login_hide_password_description)
@@ -87,7 +114,10 @@ fun LoginScreen(
                         stringResource(id = R.string.login_show_password_description)
 
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(painter = painterResource(id = image), contentDescription = description)
+                        Icon(
+                            painter = painterResource(id = image),
+                            contentDescription = description
+                        )
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
@@ -106,25 +136,34 @@ fun LoginScreen(
                 Text(stringResource(id = R.string.login_forgot_password_button_text))
             }
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Row(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
                 HorizontalDivider(
-                    modifier = Modifier.weight(1f).padding(end = 8.dp),
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp),
                     thickness = DividerDefaults.Thickness,
                     color = DividerDefaults.color
                 )
-                Text(stringResource(id = R.string.login_or_continue_with), style = MaterialTheme.typography.bodySmall)
+                Text(
+                    stringResource(id = R.string.login_or_continue_with),
+                    style = MaterialTheme.typography.bodySmall
+                )
                 HorizontalDivider(
-                    modifier = Modifier.weight(1f).padding(start = 8.dp),
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(start = 8.dp),
                     thickness = DividerDefaults.Thickness,
                     color = DividerDefaults.color
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
 
             SignInWithButtonComp(
@@ -140,6 +179,9 @@ fun LoginScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun LoginScreenPreview() {
-    LoginScreen("Login")
+private fun LoginScreenPreview() {
+    LoginScreen(
+        title = "Login",
+        loginUiState = LoginUiState.StandBy
+    )
 }
