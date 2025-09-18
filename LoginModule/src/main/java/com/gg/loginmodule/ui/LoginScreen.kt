@@ -10,18 +10,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DividerDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -85,9 +79,7 @@ fun LoginScreen(
                 label = { Text(stringResource(id = R.string.login_password_label)) },
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
-                    val image = if (passwordVisible)
-                        Icons.Filled.Visibility 
-                    else Icons.Filled.VisibilityOff 
+                    val image = if (passwordVisible) R.drawable.visibility else R.drawable.visibility_off
 
                     val description = if (passwordVisible)
                         stringResource(id = R.string.login_hide_password_description)
@@ -95,7 +87,7 @@ fun LoginScreen(
                         stringResource(id = R.string.login_show_password_description)
 
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(imageVector = image, description)
+                        Icon(painter = painterResource(id = image), contentDescription = description)
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
