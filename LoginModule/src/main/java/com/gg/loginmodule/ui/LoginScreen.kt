@@ -50,7 +50,7 @@ fun LoginScreen(
     onNavigateHome: () -> Unit,
     onNavigateToForgotPassword: () -> Unit
 ) {
-    var username by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(true) }
@@ -60,7 +60,7 @@ fun LoginScreen(
         LoginUiState.Loading -> {
             ShowCircularProgressIndicator(true)
         }
-        is LoginUiState.Success -> {}
+        is LoginUiState.Success -> onNavigateHome()
         is LoginUiState.Error -> {
             LoginAlertDialog(
                 modifier = Modifier,
@@ -74,7 +74,6 @@ fun LoginScreen(
         }
     }
 
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -82,6 +81,7 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Logo ------------------------------------------------------------------------------------
         Image(
             painter = painterResource(id = R.drawable.ic_launcher_foreground), // Uses LoginModule's R
             contentDescription = stringResource(id = R.string.login_logo_content_description),
@@ -91,13 +91,16 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
+            // Title -------------------------------------------------------------------------------
             Text(text = title, style = MaterialTheme.typography.headlineMedium)
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Email and Password TextFields -------------------------------------------------------
             OutlinedTextField(
-                value = username,
-                onValueChange = { username = it },
+                value = email,
+                onValueChange = { email = it },
                 label = { Text(stringResource(id = R.string.login_username_label)) },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -130,16 +133,21 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Sign In With Email Button -----------------------------------------------------------
             Button(
-                onClick = { /* Handle login logic here */ },
+                onClick = { onClickSignInWithEmail(email, password) },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(stringResource(id = R.string.login_button_text))
             }
+
             Spacer(modifier = Modifier.height(8.dp))
-            TextButton(onClick = { /* Handle forgot password here */ }) {
+
+            // Forgot Password Button --------------------------------------------------------------
+            TextButton(onClick = { onNavigateToForgotPassword() }) {
                 Text(stringResource(id = R.string.login_forgot_password_button_text))
             }
+
             Spacer(modifier = Modifier.height(16.dp))
 
             Row(
@@ -171,12 +179,13 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Sign In With Google Button ----------------------------------------------------------
             SignInWithButtonComp(
                 modifier = Modifier.fillMaxWidth(),
                 iconRes = R.drawable.google_icon,
                 iconDescriptionRes = R.string.login_google_icon_content_description,
                 buttonTextRes = R.string.login_sign_in_with_google_button_text,
-                onClick = {}
+                onClick = { onClickSignInWithGoogle() }
             )
         }
     }
