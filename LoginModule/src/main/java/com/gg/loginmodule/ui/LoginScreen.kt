@@ -26,12 +26,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.gg.loginmodule.R
 import com.gg.loginmodule.domain.models.LoginUiState
@@ -42,8 +42,13 @@ import com.gg.loginmodule.ui.components.SignInWithButtonComp
 
 @Composable
 fun LoginScreen(
+    modifier: Modifier = Modifier,
     title: String,
-    loginUiState: LoginUiState
+    loginUiState: LoginUiState,
+    onClickSignInWithEmail: (String, String) -> Unit,
+    onClickSignInWithGoogle: () -> Unit,
+    onNavigateHome: () -> Unit,
+    onNavigateToForgotPassword: () -> Unit
 ) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -177,11 +182,17 @@ fun LoginScreen(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
+@PreviewLightDark
 @Composable
-private fun LoginScreenPreview() {
+fun LoginScreenPreview() {
     LoginScreen(
+        modifier = Modifier,
         title = "Login",
-        loginUiState = LoginUiState.StandBy
+        loginUiState = LoginUiState.StandBy,
+        onClickSignInWithEmail = { _, _ -> },
+        onClickSignInWithGoogle = {},
+        onNavigateHome = {},
+        onNavigateToForgotPassword = {}
     )
 }
