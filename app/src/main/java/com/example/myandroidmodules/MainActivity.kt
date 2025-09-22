@@ -8,8 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.example.myandroidmodules.ui.theme.MyAndroidModulesTheme
-import com.gg.loginmodule.domain.models.LoginUiState
-import com.gg.loginmodule.ui.LoginScreen
+import com.gg.loginmodule.ui.CreateAccount
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,14 +17,19 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyAndroidModulesTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    LoginScreen(
-                        modifier = Modifier,
-                        title = "Login",
-                        loginUiState = LoginUiState.StandBy,
-                        onClickSignInWithEmail = { _, _ -> },
-                        onClickSignInWithGoogle = {},
-                        onNavigateHome = {},
-                        onNavigateToForgotPassword = {}
+//                    LoginScreen(
+//                        modifier = Modifier,
+//                        title = "Login",
+//                        loginUiState = LoginUiState.StandBy,
+//                        onClickSignInWithEmail = { _, _ -> },
+//                        onClickSignInWithGoogle = {},
+//                        onNavigateHome = {},
+//                        onNavigateToForgotPassword = {}
+//                    )
+                    CreateAccount(
+                        onNavigateBack = {},
+                        onSignUp = {},
+                        onSignInWithGoogle = {},
                     )
                 }
             }

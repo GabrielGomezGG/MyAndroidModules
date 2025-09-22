@@ -19,4 +19,19 @@
     <string name="forgot_password_email_label">Correo electrónico</string>
     <string name="forgot_password_send_button">Enviar</string>
     <string name="forgot_password_back_button_description">Atrás</string>
+
+    <!-- Create Account Screen Strings -->
+    <string name="create_account_top_bar_title">Crear Cuenta</string>
+    <string name="create_account_back_button_description">Atrás</string>
+    <string name="create_account_avatar_content_description">Avatar de usuario</string>
+    <string name="create_account_camera_icon_content_description">Cambiar foto de perfil</string>
+    <string name="create_account_username_label">Nombre de usuario</string>
+    <string name="create_account_email_label">Correo electrónico</string>
+    <string name="create_account_password_label">Contraseña</string>
+    <string name="create_account_confirm_password_label">Confirmar contraseña</string>
+    <string name="create_account_show_password">Mostrar contraseña</string>
+    <string name="create_account_hide_password">Ocultar contraseña</string>
+    <string name="create_account_button_text">Registrarse</string>
+    <string name="create_account_or_continue_with_text">O continuar con</string>
+    <string name="create_account_google_icon_description">Registrarse con Google</string>
 </resources>
