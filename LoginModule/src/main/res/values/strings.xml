@@ -11,4 +11,12 @@
     <string name="login_or_continue_with">O continuar con</string>
     <string name="login_google_icon_content_description">Icono de inicio de sesión con Google</string>
     <string name="login_sign_in_with_google_button_text">Iniciar sesión con Google</string>
+
+    <!-- Forgot Password Screen Strings -->
+    <string name="forgot_password_top_bar_title">¿Olvidaste la contraseña?</string>
+    <string name="forgot_password_main_title">Ingresa tu correo electrónico</string>
+    <string name="forgot_password_subtitle">Te enviaremos un enlace para restablecer tu contraseña.</string>
+    <string name="forgot_password_email_label">Correo electrónico</string>
+    <string name="forgot_password_send_button">Enviar</string>
+    <string name="forgot_password_back_button_description">Atrás</string>
 </resources>
