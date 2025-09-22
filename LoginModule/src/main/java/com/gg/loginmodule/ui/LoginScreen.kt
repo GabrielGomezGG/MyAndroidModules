@@ -16,9 +16,9 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,7 +31,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.gg.loginmodule.R
 import com.gg.loginmodule.domain.models.LoginUiState
@@ -75,7 +74,7 @@ fun LoginScreen(
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
@@ -98,16 +97,17 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             // Email and Password TextFields -------------------------------------------------------
-            OutlinedTextField(
+            TextField(
                 value = email,
                 onValueChange = { email = it },
                 label = { Text(stringResource(id = R.string.login_username_label)) },
+                singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            OutlinedTextField(
+            TextField(
                 value = password,
                 onValueChange = { password = it },
                 label = { Text(stringResource(id = R.string.login_password_label)) },
@@ -192,7 +192,7 @@ fun LoginScreen(
 }
 
 @Preview
-@PreviewLightDark
+//@PreviewLightDark
 @Composable
 fun LoginScreenPreview() {
     LoginScreen(
