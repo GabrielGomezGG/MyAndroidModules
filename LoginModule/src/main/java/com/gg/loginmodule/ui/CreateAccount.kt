@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,6 +52,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.rememberAsyncImagePainter
 import com.gg.loginmodule.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -115,24 +117,30 @@ fun CreateAccount(
             Box(
                 modifier = Modifier
                     .size(120.dp)
+                    .clickable(
+                        onClick = {
+                            selectedImagePicker.launch(
+                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                            )
+                        },
+                    )
             ) {
                 // Image Avatar------------------------------
                 Image(
-                    painter = painterResource(id = R.drawable.account_box), // Placeholder for avatar
+                    painter = if (selectedImage != null) rememberAsyncImagePainter(selectedImage) else painterResource(
+                        id = R.drawable.person
+                    ),
                     contentDescription = stringResource(id = R.string.create_account_avatar_content_description),
                     modifier = Modifier
                         .fillMaxSize()
-                        .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape)
-                        .padding(16.dp),
+                        .border(1.dp, MaterialTheme.colorScheme.primary, CircleShape)
+                        .padding(1.dp)
+                        .clip(CircleShape),
                     contentScale = ContentScale.Crop
                 )
                 // IconButton Camera------------------------------
-                IconButton(
-                    onClick = {
-                        selectedImagePicker.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                        )
-                    },
+                Box(
+                    contentAlignment = Alignment.Center,
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .padding(4.dp)
@@ -144,7 +152,7 @@ fun CreateAccount(
                         painter = painterResource(id = R.drawable.add_a_photo),
                         contentDescription = stringResource(id = R.string.create_account_camera_icon_content_description),
                         tint = MaterialTheme.colorScheme.onPrimary,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(24.dp)
                     )
                 }
             }
