@@ -53,21 +53,27 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
+import com.gg.loginmodule.BuildConfig
 import com.gg.loginmodule.R
+import com.gg.loginmodule.domain.models.LoginUiState
+import com.gg.loginmodule.ui.components.LoginAlertDialog
+import com.gg.loginmodule.ui.components.ShowCircularProgressIndicator
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateAccount(
     // Rule 5: modifier as first param
     modifier: Modifier = Modifier,
+    loginUiState: LoginUiState,
     onNavigateBack: () -> Unit,
-    onSignUp: () -> Unit,
+    onNavigateHome: () -> Unit,
+    onSignUpWithEmail: (String, String, String) -> Unit,
     onSignInWithGoogle: () -> Unit,
 ) {
-    var username by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var confirmPassword by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf(BuildConfig.NAME) }
+    var email by remember { mutableStateOf(BuildConfig.EMAIL) }
+    var password by remember { mutableStateOf(BuildConfig.PASSWORD) }
+    var confirmPassword by remember { mutableStateOf(BuildConfig.RE_PASSWORD) }
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmPasswordVisible by remember { mutableStateOf(false) }
 
@@ -80,6 +86,27 @@ fun CreateAccount(
         if (it != null) {
             selectedImage = it.toString()
             isImageError = false
+        }
+    }
+
+    var showDialog by remember { mutableStateOf(true) }
+
+    when (loginUiState) {
+        LoginUiState.StandBy -> {}
+        LoginUiState.Loading -> {
+            ShowCircularProgressIndicator(true)
+        }
+        is LoginUiState.Success -> onNavigateHome()
+        is LoginUiState.Error -> {
+            LoginAlertDialog(
+                modifier = Modifier,
+                showDialog = showDialog,
+                icon = painterResource(R.drawable.error),
+                dialogTitle = loginUiState.errorTitle,
+                dialogText = loginUiState.errorMessage,
+                onDismissRequest = { showDialog = false },
+                onConfirmation = { showDialog = false }
+            )
         }
     }
 
@@ -272,7 +299,7 @@ fun CreateAccount(
             // Button Sign Up------------------------------
             Button(
                 onClick = {
-                    onSignUp()
+                    onSignUpWithEmail(username,email,password)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -344,8 +371,10 @@ fun CreateAccount(
 fun CreateAccountPreview() {
     MaterialTheme {
         CreateAccount(
+            loginUiState = LoginUiState.StandBy,
+            onNavigateHome = {},
             onNavigateBack = {},
-            onSignUp = {},
+            onSignUpWithEmail = { _, _, _ -> },
             onSignInWithGoogle = {},
         )
     }

@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -16,12 +19,29 @@ android {
     }
 
     buildTypes {
+
+        val properties = Properties()
+        properties.load(FileInputStream(rootProject.file("local.properties")))
+
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            buildConfigField("String", "EMAIL", "\"\"")
+            buildConfigField("String", "NAME", "\"\"")
+            buildConfigField("String", "PASSWORD", "\"\"")
+            buildConfigField("String", "RE_PASSWORD", "\"\"")
+        }
+        debug {
+            isMinifyEnabled = false
+
+            buildConfigField("String", "EMAIL", "\"tititestgg@gmail.com\"")
+            buildConfigField("String", "NAME", "\"titi\"")
+            buildConfigField("String", "PASSWORD", "\"qweqwe\"")
+            buildConfigField("String", "RE_PASSWORD", "\"qweqwe\"")
         }
     }
     compileOptions {
@@ -34,6 +54,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 

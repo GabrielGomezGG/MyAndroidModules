@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.example.myandroidmodules.ui.theme.MyAndroidModulesTheme
+import com.gg.loginmodule.domain.models.LoginUiState
 import com.gg.loginmodule.ui.CreateAccount
 
 class MainActivity : ComponentActivity() {
@@ -27,10 +28,12 @@ class MainActivity : ComponentActivity() {
 //                        onNavigateToForgotPassword = {}
 //                    )
                     CreateAccount(
+                        modifier = Modifier,
+                        loginUiState = LoginUiState.StandBy,
                         onNavigateBack = {},
-                        onSignUp = {},
-                        onSignInWithGoogle = {},
-                    )
+                        onNavigateHome = {},
+                        onSignUpWithEmail = { _, _, _ -> }
+                    ) { }
                 }
             }
         }
