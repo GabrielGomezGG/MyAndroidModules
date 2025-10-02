@@ -23,3 +23,4 @@ rootProject.name = "MyAndroidModules"
 include(":app")
 include(":LoginModule")
 include(":shared")
+include(":setting")
